@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - HabitNEST</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: #0f0c29;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .background {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .cube {
+            position: absolute;
+            top: 80vh;
+            left: 45vw;
+            width: 10px;
+            height: 10px;
+            border: solid 1px #4CAF50;
+            transform-origin: top left;
+            transform: scale(0) rotate(0deg) translate(-50%, -50%);
+            animation: cube 12s ease-in forwards infinite;
+        }
+
+        .cube:nth-child(2) {
+            animation-delay: 2s;
+            left: 25vw;
+            top: 40vh;
+        }
+
+        .cube:nth-child(3) {
+            animation-delay: 4s;
+            left: 75vw;
+            top: 50vh;
+        }
+
+        .cube:nth-child(4) {
+            animation-delay: 6s;
+            left: 90vw;
+            top: 10vh;
+        }
+
+        @keyframes cube {
+            from {
+                transform: scale(0) rotate(0deg) translate(-50%, -50%);
+                opacity: 1;
+            }
+            to {
+                transform: scale(20) rotate(960deg) translate(-50%, -50%);
+                opacity: 0;
+            }
+        }
+
+        .wrapper {
+            width: 420px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(76, 175, 80, 0.2);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 30px rgba(76, 175, 80, 0.1);
+            border-radius: 10px;
+            padding: 30px 40px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .wrapper h1 {
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #4CAF50;
+        }
+
+        .input-box {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            margin: 30px 0;
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: 2px solid rgba(76, 175, 80, 0.2);
+            outline: none;
+            border-radius: 40px;
+            font-size: 16px;
+            color: white;
+            padding: 20px 45px 20px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .input-box input:focus,
+        .input-box input:valid {
+            border-color: #4CAF50;
+        }
+
+        .input-box i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #4CAF50;
+        }
+
+        .password-requirements {
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .requirement {
+            margin: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .requirement i {
+            font-size: 16px;
+        }
+
+        .requirement.valid {
+            color: #4CAF50;
+        }
+
+        .requirement.invalid {
+            color: #ff4444;
+        }
+
+        .btn {
+            width: 100%;
+            height: 45px;
+            background: #4CAF50;
+            border: none;
+            outline: none;
+            border-radius: 40px;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .login-link {
+            font-size: 14.5px;
+            text-align: center;
+            margin: 20px 0 15px;
+        }
+
+        .login-link p a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link p a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: transparent;
+            border: 2px solid #4CAF50;
+            border-radius: 30px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-home:hover {
+            background: #4CAF50;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .wrapper {
+                width: 90%;
+                margin: 20px;
+                padding: 20px;
+            }
+
+            .back-to-home {
+                top: 10px;
+                left: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+    </div>
+
+    <a href="{{ url_for('main.index') }}" class="back-to-home">
+        <i class='bx bx-home-alt'></i> Back to Home
+    </a>
+
+    <div class="wrapper">
+        <form id="registerForm" action="{{ url_for('auth.register') }}" method="POST" class="sign-up-form">
+            <h1>Register</h1>
+            <div class="input-box">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                <i class='bx bx-user'></i>
+            </div>
+
+            <div class="input-box">
+                <input type="email" id="email" name="email" placeholder="Email" required>
+                <i class='bx bx-envelope'></i>
+            </div>
+
+            <div class="input-box">
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <i class='bx bx-lock-alt'></i>
+            </div>
+
+            <div class="input-box">
+                <input type="password" id="confirmPassword" name="confirm_password" placeholder="Confirm Password" required>
+                <i class='bx bx-lock-alt'></i>
+            </div>
+
+            <div class="password-requirements">
+                <div class="requirement" data-requirement="length">
+                    <i class='bx bx-x'></i> At least 8 characters
+                </div>
+                <div class="requirement" data-requirement="uppercase">
+                    <i class='bx bx-x'></i> At least one uppercase letter
+                </div>
+                <div class="requirement" data-requirement="lowercase">
+                    <i class='bx bx-x'></i> At least one lowercase letter
+                </div>
+                <div class="requirement" data-requirement="number">
+                    <i class='bx bx-x'></i> At least one number
+                </div>
+                <div class="requirement" data-requirement="match">
+                    <i class='bx bx-x'></i> Passwords match
+                </div>
+            </div>
+
+            <button type="submit" class="btn" disabled>Register</button>
+
+            <div class="login-link">
+                <p>Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('registerForm');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const submitButton = document.querySelector('.btn');
+            const requirements = {
+                length: false,
+                uppercase: false,
+                lowercase: false,
+                number: false,
+                match: false
+            };
+
+            function updateRequirement(requirement, valid) {
+                const element = document.querySelector(`[data-requirement="${requirement}"]`);
+                const icon = element.querySelector('i');
+                
+                requirements[requirement] = valid;
+                
+                if (valid) {
+                    element.classList.add('valid');
+                    element.classList.remove('invalid');
+                    icon.classList.remove('bx-x');
+                    icon.classList.add('bx-check');
+                } else {
+                    element.classList.remove('valid');
+                    element.classList.add('invalid');
+                    icon.classList.remove('bx-check');
+                    icon.classList.add('bx-x');
+                }
+
+                // Enable submit button if all requirements are met
+                submitButton.disabled = !Object.values(requirements).every(req => req);
+            }
+
+            function validatePassword() {
+                const pwd = password.value;
+                const confirmPwd = confirmPassword.value;
+
+                updateRequirement('length', pwd.length >= 8);
+                updateRequirement('uppercase', /[A-Z]/.test(pwd));
+                updateRequirement('lowercase', /[a-z]/.test(pwd));
+                updateRequirement('number', /[0-9]/.test(pwd));
+                updateRequirement('match', pwd === confirmPwd && pwd !== '');
+            }
+
+            password.addEventListener('input', validatePassword);
+            confirmPassword.addEventListener('input', validatePassword);
+
+            // Add form submission handling
+            form.addEventListener('submit', (e) => {
+                console.log('Form submitted');
+                console.log('Form data:', {
+                    username: form.username.value,
+                    email: form.email.value,
+                    password: form.password.value,
+                    confirm_password: form.confirm_password.value
+                });
+                
+                if (!Object.values(requirements).every(req => req)) {
+                    e.preventDefault();
+                    console.log('Form submission prevented - requirements not met');
+                    return;
+                }
+                
+                // Enable the submit button
+                submitButton.disabled = false;
+                console.log('Form submission proceeding');
+            });
+
+            // Add floating effect
+            document.addEventListener('mousemove', (e) => {
+                const wrapper = document.querySelector('.wrapper');
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+                const wrapperRect = wrapper.getBoundingClientRect();
+                const wrapperX = wrapperRect.left + wrapperRect.width / 2;
+                const wrapperY = wrapperRect.top + wrapperRect.height / 2;
+                
+                const moveX = (mouseX - wrapperX) / 50;
+                const moveY = (mouseY - wrapperY) / 50;
+                
+                wrapper.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+
+            document.addEventListener('mouseleave', () => {
+                const wrapper = document.querySelector('.wrapper');
+                wrapper.style.transform = 'translate(0, 0)';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About HabitNEST</title>
+
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap' rel='stylesheet'>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: #0f0c29;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .background {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .cube {
+            position: absolute;
+            top: 80vh;
+            left: 45vw;
+            width: 10px;
+            height: 10px;
+            border: solid 1px #4CAF50;
+            transform-origin: top left;
+            transform: scale(0) rotate(0deg) translate(-50%, -50%);
+            animation: cube 12s ease-in forwards infinite;
+        }
+
+        .cube:nth-child(2) {
+            animation-delay: 2s;
+            left: 25vw;
+            top: 40vh;
+        }
+
+        .cube:nth-child(3) {
+            animation-delay: 4s;
+            left: 75vw;
+            top: 50vh;
+        }
+
+        .cube:nth-child(4) {
+            animation-delay: 6s;
+            left: 90vw;
+            top: 10vh;
+        }
+
+        .cube:nth-child(5) {
+            animation-delay: 8s;
+            left: 10vw;
+            top: 85vh;
+        }
+
+        @keyframes cube {
+            from {
+                transform: scale(0) rotate(0deg) translate(-50%, -50%);
+                opacity: 1;
+            }
+            to {
+                transform: scale(20) rotate(960deg) translate(-50%, -50%);
+                opacity: 0;
+            }
+        }
+
+        /* Navigation */
+        nav {
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .nav-buttons button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .signin-btn {
+            background: transparent;
+            border: 2px solid #4CAF50 !important;
+            color: white;
+        }
+
+        .signup-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .nav-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        /* Main Content */
+        main {
+            padding: 50px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .tagline {
+            font-size: 1.5em;
+            color: #4CAF50;
+            animation: fadeInUp 1s ease 0.5s backwards;
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-card i {
+            font-size: 40px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-buttons {
+                margin-top: 20px;
+            }
+
+            main {
+                padding: 20px;
+            }
+
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                flex-direction: column;
+            }
+
+            .stat-item {
+                margin: 10px 0;
+            }
+        }
+        .about-content {
+            max-width: 800px;
+            margin: 50px auto;
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .about-content h2 {
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            color: #4CAF50;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        .about-content p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin: 20px 0;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            text-align: justify;
+            letter-spacing: 0.5px;
+        }
+        
+        .about-content b {
+            color: #7fff7f;
+            font-weight: 500;
+        }
+        
+        /* Add this in your head section for the Poppins font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+        
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+    </div>
+
+    <header>
+        <nav>
+            <div class="logo">HabitNEST</div>
+            <div class="nav-buttons">
+                <button onclick="location.href='{{ url_for('auth.login') }}'" class="signin-btn">Sign In</button>
+                <button onclick="location.href='{{ url_for('auth.register') }}'" class="signup-btn">Sign Up</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Welcome to HabitNEST</h1>
+            <p class="tagline">Build Better Habits, Build a Better Life</p>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <i class='bx bx-target-lock'></i>
+                <h2>Track Your Goals</h2>
+                <p>Set, monitor, and achieve your personal goals with our intuitive tracking system.</p>
+            </div>
+            <div class="feature-card">
+                <i class='bx bx-line-chart'></i>
+                <h2>Visual Progress</h2>
+                <p>Watch your progress through beautiful charts and analytics.</p>
+            </div>
+            <div class="feature-card">
+                <i class='bx bx-trophy'></i>
+                <h2>Earn Achievements</h2>
+                <p>Stay motivated with our rewarding achievement system.</p>
+            </div>
+        </section>
+
+        <section class="about-content">
+            <h2>Why Choose HabitNEST?</h2>
+            <p><b>HabitNEST is your personal companion in building and maintaining positive habits. 
+                We understand that creating lasting change isn't easy, 
+                which is why we've created a powerful yet simple platform to support your journey.</b></p>
+            
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate numbers
+            const numbers = document.querySelectorAll('.number');
+            
+            const animateNumber = (element) => {
+                const target = parseInt(element.getAttribute('data-target'));
+                const duration = 2000; // 2 seconds
+                const step = target / (duration / 16); // 60fps
+                let current = 0;
+
+                const updateNumber = () => {
+                    current += step;
+                    if (current < target) {
+                        element.textContent = Math.round(current);
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        element.textContent = target;
+                    }
+                };
+
+                updateNumber();
+            };
+
+            // Intersection Observer for stats animation
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateNumber(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            numbers.forEach(number => observer.observe(number));
+
+            // Add parallax effect to background cubes
+            document.addEventListener('mousemove', (e) => {
+                const cubes = document.querySelectorAll('.cube');
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+
+                cubes.forEach(cube => {
+                    const speed = cube.offsetTop / 100;
+                    const x = (window.innerWidth - mouseX * speed) / 100;
+                    const y = (window.innerHeight - mouseY * speed) / 100;
+
+                    cube.style.transform = `translate(${x}px, ${y}px) scale(${speed}) rotate(${x * y}deg)`;
+                });
+            });
+        });
+          
+
+
+    </script>
+</body>
+</html>

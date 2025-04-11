@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - HabitNEST</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #45a049;
+            --dark-bg: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-color: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #0f0c29;
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+        }
+
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-link {
+            color: var(--text-color) !important;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+
+        /* Analytics Content */
+        .analytics-container {
+            padding: 2rem;
+        }
+
+        .stats-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .category-badge {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin: 0.5rem;
+            display: inline-block;
+        }
+
+        .category-count {
+            font-weight: bold;
+            margin-left: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .analytics-container {
+                padding: 1rem;
+            }
+        }
+
+        .weekly-chart {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        .progress-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .day-progress {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .day-label {
+            text-align: right;
+            font-weight: 500;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .category-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .category-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-count {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .day-progress {
+                grid-template-columns: 60px 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('habits.base') }}">HabitNEST</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('habits.base') }}">
+                            <i class='bx bxs-dashboard'></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('habits.analytics') }}">
+                            <i class='bx bx-line-chart'></i> Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('habits.achievements') }}">
+                            <i class='bx bx-trophy'></i> Achievements
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('habits.calendar') }}">
+                            <i class='bx bx-calendar'></i> Calendar
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}">
+                            <i class='bx bx-log-out'></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="analytics-container">
+        <!-- Overview Stats -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <div class="stat-value">{{ analytics.total_habits }}</div>
+                    <div class="stat-label">Total Habits</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <div class="stat-value">{{ analytics.total_completions }}</div>
+                    <div class="stat-label">Total Completions</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <div class="stat-value">{{ analytics.completion_rate }}%</div>
+                    <div class="stat-label">Weekly Completion Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Chart Options -->
+            <div class="col-md-12 mb-4">
+                <div class="d-flex justify-content-end">
+                    <select id="chartType" class="form-select w-auto">
+                        <option value="weekly" selected>Weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Weekly Graph -->
+            <div class="col-md-12 mb-4">
+                <div class="chart-container" style="height: 400px;">
+                    <canvas id="weeklyGraph"></canvas>
+                </div>
+            </div>
+
+            <!-- Weekly Progress -->
+            <div class="col-md-12">
+                <div class="stats-container">
+                    <h2 class="section-title">Weekly Progress</h2>
+                    <div class="weekly-chart">
+                        <div class="daily-progress">
+                            <div class="progress-grid">
+                                {% for day, count in analytics.weekly_data.items() %}
+                                <div class="day-progress">
+                                    <div class="day-label">{{ day }}</div>
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar" role="progressbar" 
+                                             style="width: {{ (count / analytics.total_habits * 100) if analytics.total_habits > 0 else 0 }}%"
+                                             aria-valuenow="{{ count }}" aria-valuemin="0" aria-valuemax="{{ analytics.total_habits }}">
+                                            {{ count }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('weeklyGraph').getContext('2d');
+        let chartData = {
+            weekly: {
+                labels: Object.keys({{ analytics.weekly_data|tojson }}),
+                data: Object.values({{ analytics.weekly_data|tojson }})
+            },
+            monthly: {
+                labels: {{ analytics.monthly_labels|tojson }},
+                data: {{ analytics.monthly_data|tojson }}
+            },
+            yearly: {
+                labels: {{ analytics.yearly_labels|tojson }},
+                data: {{ analytics.yearly_data|tojson }}
+            }
+        };
+
+        let weeklyGraph = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: chartData.weekly.labels,
+                datasets: [{
+                    label: 'Completions',
+                    data: chartData.weekly.data,
+                    backgroundColor: 'rgba(76, 175, 80, 0.6)',
+                    borderColor: 'rgba(76, 175, 80, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        document.getElementById('chartType').addEventListener('change', function() {
+            const selectedType = this.value;
+            weeklyGraph.data.labels = chartData[selectedType].labels;
+            weeklyGraph.data.datasets[0].data = chartData[selectedType].data;
+            weeklyGraph.update();
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
